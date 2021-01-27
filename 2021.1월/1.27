@@ -10,13 +10,21 @@
 (getSharedPreferences()는 Context를 가지고 있는 모든 컴포넌트에서 접근과 호출이 가능하다.
 또 첫번째 파라미터는 입력된 데이터가 저장될 파일명을, 두번째 파라미터에는 파일접근권한 설정, 보안상 이유로 MODE_PRIVATE만 사용)
 
-예)  SharedPreferences sharedPreferences= getSharedPreferences("이름", MODE_PRIVATE);   
 
 (참고 내용 : Context  는 크게 두 가지 역할을 수행하는 Abstract 클래스 입니다.
 어플리케이션에 관하여 시스템이 관리하고 있는 정보에 접근하기 
 안드로이드 시스템 서비스에서 제공하는 API 를 호출 할 수 있는 기능)
 
-Editor로 데이터를 저장하고 불러오기
+값 넣는 순서이다
+1.SharedPreferences sharedPreferences= getSharedPreferences("이름", MODE_PRIVATE);    //이름이라는 주머니가 생긴거
+2.Editor로 데이터를 저장하고 불러오기
 SharedPreferences로 데이터를 저장하기 위해서는 Editor 인터페이스를 사용해야 한다.
 edit() 함수로 호출해서 사용할수 있다.
 SharedPreferences.Editor editor= sharedPreferences.edit(); //sharedPreferences를 제어할 editor를 선언
+다음으로
+3.editor.putFloat( key : String {위에서 이름에 해당}, value: Float) 데이터를 저장할 때는 입력될 값의 타입에 맞게 작성
+4.editor.apply()
+
+데이터 불러올때는 
+1.SharedPreferences sharedPreferences= getSharedPreferences("이름", MODE_PRIVATE);
+2.sharedPreferences.getString( key , value )
