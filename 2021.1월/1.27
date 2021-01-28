@@ -22,7 +22,7 @@ SharedPreferences로 데이터를 저장하기 위해서는 Editor 인터페이�
 edit() 함수로 호출해서 사용할수 있다.
 SharedPreferences.Editor editor= sharedPreferences.edit(); //sharedPreferences를 제어할 editor를 선언
 다음으로
-3.editor.putFloat( key : String {위에서 이름에 해당}, value: Float) 데이터를 저장할 때는 입력될 값의 타입에 맞게 작성
+3.editor.putFloat( key : String {위에서 이름 파일에 대한 비밀번호 같은 느낌}, value: Float) 데이터를 저장할 때는 입력될 값의 타입에 맞게 작성
 4.editor.apply()
 
 데이터 불러올때는 
