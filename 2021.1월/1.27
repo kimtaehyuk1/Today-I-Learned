@@ -27,4 +27,4 @@ SharedPreferences.Editor editor= sharedPreferences.edit(); //sharedPreferences�
 
 데이터 불러올때는 
 1.SharedPreferences sharedPreferences= getSharedPreferences("이름", MODE_PRIVATE);
-2.sharedPreferences.getString( key , value )
+2.sharedPreferences.getFloat( key , value )
