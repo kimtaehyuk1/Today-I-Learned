@@ -26,6 +26,6 @@ hobby = "산책"
 is_adult = age >= 3 #boolean형 만든거임
 
 
-print("우리집 " + animal + " 의 이름은 " + name + "이예요")
+print("우리집 " + animal + " 의 이름은 " + name + "이예요") # + 부분을 , 로도 할수있따(,로 하면 str없이 사용가능)
 print(name + "는" + str(age) + "살이며," + hobby + "을 아주 좋아합니다.") #숫자는 str(정수형을 문자열로 바꿔줌) 로 감싸기
-print(name + "는 어른일까요?" + str(is_adult)) #boolean형도 str로 감싸주기
+print(name , "는 어른일까요?" , is_adult) #boolean형도 str로 감싸주기
