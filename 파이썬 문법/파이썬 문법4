@@ -1,0 +1,134 @@
+#리스트
+
+subway = ["유재석", "조세호", "박명수"]
+print(subway)
+#조세호가 몇번쨰 칸에 타고 있는가?
+print(subway.index("조세호"))
+#다음 정류장에서  하하가 탔다.
+subway.append("하하") #맨뒤에 붙게됨
+print(subway)
+#이젠 사이에다가 정형돈을 넣어보자, 유재석과 조세호 사이에
+subway.insert(1,"정형돈") #앞에는 어디다 넣을지 정하고 뒤에 객체
+print(subway)
+#지하철에 있는 사람을 뒤에서 꺼냄
+subway.pop() #pop은 뒤에서 꺼냄
+print(subway) #하하가 빠짐
+
+#같은 이름이 있는사람이 몇명있는지 확인하기
+subway.append("유재석")
+print(subway)
+print(subway.count("유재석"))
+
+#정렬하기
+num_list = [5,2,4,3,1]
+num_list.sort() #sort가 정렬한다는 의미
+print(num_list) #[1, 2, 3, 4, 5] 이게 결과값
+#순서 뒤집기 가능
+num_list.reverse()
+print(num_list) #[5, 4, 3, 2, 1] 이 결과값임
+#값들 모두 지우기
+num_list.clear()
+print(num_list)
+
+#리스트는 자료형에 구애받지 않고 섞어서 쓸수있다.
+mix_list = ["조세호",20,True]
+print(mix_list)
+
+#리스트 확장도 가능함
+num_list = [5,2,4,3,1]
+num_list.extend(mix_list) #두리스트 합쳐짐
+print(num_list)
+
+#사전
+#key 와 value key는 맞는 열쇠만 열수있고 중복안됨
+cabinet = { 3: "유재석", 100: "김태호"} #{}를 써야하면, 옆에와 같은 형식 key : value
+print(cabinet[3]) #꺼내 쓸땐 [key]
+print(cabinet.get(3)) #get으로도 꺼낼수 있다 근데 ()로
+# print(cabinet[5]) #없는 키를 []로 가져오면 프로그램 종료
+print(cabinet.get(5)) #없는키를 get()으로 가져오면 none이라 찍히고 다음꺼 수행됨
+print(cabinet.get(5, "사용가능")) #5라는거 있으면 그 값 가져오고 없으면 "사용가능" 찍어줌
+print("hi")
+
+print( 3 in cabinet) # key in cabinet 있으면 True
+
+#key가 굳이 정수형 아니더라도 아무렇게나 지정하면 된다.
+
+#새손님
+print(cabinet) #{3: '유재석', 100: '김태호'}
+cabinet[3] = "김종국" #월래 3번자리 유재석이 김종국으로 바뀜
+cabinet[1000] = "조세호" # 없었던 key값이 추가됨
+print(cabinet) #{3: '김종국', 100: '김태호', 1000: '조세호'}
+#손님이 갔다
+del cabinet[3]
+print(cabinet) #{100: '김태호', 1000: '조세호'}
+# key들만 출력
+print(cabinet.keys())
+#value들만 출력
+print(cabinet.values())
+#key,value 모두 출력
+print(cabinet.items())
+#모든 값 지우기
+cabinet.clear()
+print(cabinet)
+
+#튜플(리스트와 다르게 내용 변경 추가 안됨),하지만 속도가 빠름 즉 변경되지 않는 리스트 할떄
+menu = ("돈까스", "치즈까스") #()로 써야된다.
+print(menu[0])
+
+#활용
+(name, age, hobby) = ("김종국", 20 ,"코딩")  #변수 한꺼번에 선언
+print(name,age,hobby) #김종국 20 코딩
+
+#세트(집합) 중복안됨, 순서없음
+my_set = {1, 2, 3, 3, 3} 
+print(my_set) #{1, 2, 3} 이렇게 찍힘
+
+java = {"유재석","김태호","양세형"}
+python = set(["유재석", "박명수"]) #set( [] ) 이렇게도 표현
+
+#교집합( 자바와 파이썬 모두 할 수 있는사람)
+print(java & python) #{'유재석'}이 찍힘
+print(java.intersection(python)) #이것도 위과 같이 교집합 표현
+
+#합집합
+print(java | python)
+print(java.union(python)) #위와 같은 표현
+
+#차집합 , 자바는 할수있지만 파이썬은 할줄 모르는 계발자
+print(java - python)
+print(java.difference(python)) #위와 같은뜻
+
+#파이썬 할 줄 아는사람이 늘어남
+python.add("김태호") #값 추가
+print(python)
+
+#자바를 까먹었다.
+java.remove("김태호")
+print(java)
+
+# 자료구조의 변경
+menu = {"커피", "우유", "주스"} #중괄호를 이용해서 set으로 들어감
+print(menu, type(menu)) #{'주스', '우유', '커피'} <class 'set'>
+menu = list(menu)
+print(menu, type(menu)) #['우유', '주스', '커피'] <class 'list'>
+menu = tuple(menu)
+print(menu, type(menu)) #('커피', '주스', '우유') <class 'tuple'>
+
+#if
+weather = input("오늘 날씨가 어때요?") #이건 사용자가 직접 칠수있게
+if weather == "비" or weather == "눈" : # ==이거 조심 : 이거 조심 , or 로 추가할수도 있다
+    print("우산을 챙기세요")
+elif weather == "미세먼지" :  # : 이거 조심 
+    print("마스크를 챙기세요")
+else:
+    print("준비물이 필요없어요") #이건 날씨가 비와 미세먼지가 아닐때 위에있는 모든게 안맞을때, else가 없으면 위에 if와 elif내용 없으면 이거 찍음
+
+temp = int(input("기온은 어때요?")) #input이 문자열 이기 때문에 int로 감싸줌
+if 30 <= temp:
+    print("너무 더워요")
+elif 10 <= temp and temp < 30 : #and는 앞뒤 모두 성립할때
+    print("괜찮은 날씨예요")
+elif 0<= temp and temp <10 :
+    print("외투를 챙기세요")
+else: #즉 0도 미만
+    print("나가지마")
