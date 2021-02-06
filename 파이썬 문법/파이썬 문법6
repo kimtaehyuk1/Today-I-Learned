@@ -1,0 +1,157 @@
+#continue 와 break
+absent = [2,5] #2번과5번은 결석 , 리스트로 만들거
+no_book = [7] #책을 깜빡함
+for student in range(1,11): # 1,2,3,4,5,6,7,8,9,10 , student는 따로 선언안하고 이런식으로 바로 결합되는군
+    if student in absent: #만약 학생중 결석이있으면
+        continue # 만약 2와5가 있으면 아래 print시행하지말고 넘어가라는 뜻
+    elif student in no_book:
+        print("오늘 수업 여기까지. {0}는 교무실로 따라와".format(student)) #안에 써주는거 조심 student
+        break #7이후엔 밑에 프린트문 안찍힘
+    print("{0}, 책을 읽어봐".format(student))
+
+#위에 결과값
+# 1, 책을 읽어봐
+# 3, 책을 읽어봐
+# 4, 책을 읽어봐
+# 6, 책을 읽어봐
+# 오늘 수업 여기까지. 7는 교무실로 따라와
+
+#한줄 for 활용
+#출석번호 1 2 3 4, 근데 법이 바껴서 앞에 100을 붙이기로 함-> 101, 102, 103, 104.
+students = [1,2,3,4,5]
+print(students)
+students = [i+100 for i in students] #i는 student라는 리스트있는 얘들 불러오면서 거기서 100더한값을 리스트로 바꿔서 집어넣어라
+print(students)
+
+#학생들 이름을 길이로 변환
+students = ["아이언맨", "토르", "아이엠 그루트"]
+students = [len(i) for i in students] #student안에 들어가있는 값들을 하나씩 조회하면서 그 길이를 students에 집어넣다
+print(students)
+
+#함수
+def open_account(): #함수 정의할땐 def 함수이름(): 이거다
+    print("새로운 계좌가 생성되었습니다.") #호출이 되어야 실행됨
+
+open_account() #이걸써야 함수불려짐
+
+#전달값과 반환값
+#입금
+def deposit(balance,money):  #balance는 잔액이고 money는 새로 입금받는거
+    print("입금이 완료되었습니다. 잔액은 {0} 원입니다.".format(balance + money))
+    return balance + money
+
+#출금
+def withdraw(balance, money): #여기서 money는 뺼돈
+    if balance >= money: #출금가능하면
+        print("출금이 완료되었습니다. 잔액은 {0} 원입니다.".format(balance - money))
+        return balance - money
+    else:
+        print("출금이 완료되지 않았습니다. 잔액은 {0} 원 입니다".format(balance))
+        return balance    
+
+#출금하는데 밤에함
+def withdraw_night(balance , money):
+    commission = 100 #이건 수수료
+    return commission, balance - money - commission # 두개의 값을 , 로 구분해서 보내기
+    
+
+balance = 0
+balance = deposit(balance,10000)  #return으로 받아서 여기서 balance가 10000이됨
+balance = withdraw(balance,9000)  #balance가 1000이됨
+commission,balance = withdraw_night(balance,100)  #return값을 두개했기에 여기서 선언도 2개 해야된다
+print ("수수료는 {0}원 이며, 잔액은{1} 원입니다.".format(commission,balance))
+
+#결과값
+# 입금이 완료되었습니다. 잔액은 10000 원입니다.
+# 출금이 완료되었습니다. 잔액은 1000 원입니다.
+# 수수료는 100원 이며, 잔액은800 원입니다.
+
+#꿀 팁 두줄을 한줄처럼 이으려면 \ 하면됨
+#기본값
+
+# def profile(name, age=24, main_lang = "파이썬"): #이렇게걍 바로 쓰면 기본값 들어감 그리고 파이썬으 따로 int나 뭐 이런거 안해두되는듯
+# 또 함수 호출할때 변수가되는 이름만 profile("유재석") 이렇게하면 나이랑 메인언어는 따라옴
+
+#키워드값 이용 함수 호출
+def profile(name, age, main_lang):
+    print(name,age,main_lang)
+
+profile(main_lang="자바", age=25, name = "김태혁") #결과값 김태혁 25 자바 이렇게 아라서 맞춰짐
+
+#가변인자 이용한 함수호출
+def profile2(name, age, lang1, lang2, lang3, lang4, lang5):
+    print("이름 : {0}\t나이 : {1}\t".format(name,age), end=" ") #마지막 end=""를 해주면 밑에 print문이 줄바꿈 안되고 옆으로 찍힌다
+    print( lang1, lang2, lang3, lang4, lang5)
+
+profile2("유재석", 20, "python", "java", "c", "c++", "c#")
+profile2("김태호", 25, "kotlin", "swift", "","","") 
+
+#결과값
+# 이름 : 유재석   나이 : 20        python java c c++ c#
+# 이름 : 김태호   나이 : 25        kotlin swift 
+
+#근데 재석이가 공부를 더해서 언어가 1개 늘었거나 하면 함수를 다시 늘려야한다! 이럴때 가변인자를 쓴다(서로 다른 개수를 넣어줄때)
+
+def profile3(name, age, *language): #위와 다르게 *language는 넣고싶은 만큼넣수 있다 출력할때만 조심
+    print("이름 : {0}\t나이 : {1}\t".format(name,age), end=" ") 
+    for lang in language:
+        print(lang, end= " ") #여기 end는 언어사이사이를 붙여줌
+    print() #걍 줄 띄워줄라고
+
+profile3("유재석", 20, "python", "java", "c", "c++", "c#", "javascript")
+profile3("김태호", 25, "kotlin", "swift", "","","")
+
+#결과값
+# 이름 : 유재석   나이 : 20        python java c c++ c# javascript
+# 이름 : 김태호   나이 : 25        kotlin swift
+
+#지역변수와 전역변수
+#지역변수는 함수 내에서만 쓸 수 있는거 전역변수는 모든 공간
+gun = 10
+
+def checkpoint(soldiers): #경계근무
+    gun = 20 #밑에껀만 하면 오류남 지역적으로 이거도 선언해야됨
+    gun = gun - soldiers
+    print("[함수 내] 남은 총 : {0}".format(gun))
+
+print("전체 총 : {0}".format(gun))
+checkpoint(2) #두명이 경계근무 나감
+print("남은 총 : {0}".format(gun))
+
+#결과값
+# 전체 총 : 10
+# [함수 내] 남은 총 : 18
+# 남은 총 : 10
+
+gun2 = 10
+
+def checkpoint2(soldiers): #경계근무
+    global gun2   #여기 안에서도 밖에 gun2를 쓸거다 
+    gun2 = gun2 - soldiers #gun2는 전역변수니까 이젠 gun2값 바뀜
+    print("[함수 내] 남은 총 : {0}".format(gun2))
+
+print("전체 총 : {0}".format(gun2))
+checkpoint2(2) #두명이 경계근무 나감
+print("남은 총 : {0}".format(gun2))
+
+#결과값
+# 전체 총 : 10
+# [함수 내] 남은 총 : 8
+# 남은 총 : 8
+
+
+gun2 = 10
+
+def checkpoint_ret(gun2,soldiers):
+    gun2 = gun2 - soldiers
+    print("[함수 내] 남은 총 : {0}".format(gun2))
+    return gun2
+
+print("전체 총 : {0}".format(gun2))
+gun2 = checkpoint_ret(gun2,2)
+print("남은 총 : {0}".format(gun2))
+
+#결과값
+# 전체 총 : 10
+# [함수 내] 남은 총 : 8
+# 남은 총 : 8
