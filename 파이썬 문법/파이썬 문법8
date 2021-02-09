@@ -1,0 +1,131 @@
+#클래스
+#마린 : 공격유닛 , 군인, 총을 쏠 수 있다.
+# name = "마린"
+# hp = 40 # 유닛 체력
+# damage = 5 # 유닛의 공격력
+
+# print("{0} 유닛이 생성되었습니다.".format(name))
+# print("체력 {0}, 공격력 {1}\n".format(hp,damage) )
+
+# #탱크만들기 공격유닛, 포쓸수 있고, 일반모드 / 시즈모드 있다.
+# tank_name = "탱크"
+# tank_hp = 150 # 유닛 체력
+# tank_damage = 35 # 유닛의 공격력
+
+# print("{0} 유닛이 생성되었습니다.".format(tank_name))
+# print("체력 {0}, 공격력 {1}\n".format(tank_hp,tank_damage) )
+
+# def attack(name, location, damage):
+#     print("{0} : {1} 방향으로 적군을 공격 합니다. [공격력 {2}]".format( \
+#        name, location,damage ))
+
+# attack(name, "1시", damage)
+# attack(tank_name, "1시", tank_damage)
+#결과값
+# 마린 : 1시 방향으로 적군을 공격 합니다. [공격력 5]
+# 탱크 : 1시 방향으로 적군을 공격 합니다. [공격력 35]
+
+# 이런식으로 수많은 몬스터들이 있는데 그럴때 마다 계속 이런식으로 추가하는것은 너무 힘들다.
+#그래서 클래스라는것이 필요하다 즉 붕어빵 틀같은 거다 틀은 1개인데 붕어빵은 계속해서 만들수 있다.
+#지금까지 한거 클래스로 만들기
+
+class Unit:
+    def __init__(self,name,hp):  #설명하겠지만 우선적으로 따라가보기 init통해서 필요한 값들 정의를 해주는것이다.
+        self.name = name
+        self.hp = hp
+        # self.damage = damage
+        # print("{0} 유닛이 생성 되었습니다.".format(self.name))
+        # print("체력 {0}, 공격력 {1}".format(self.hp, self.damage))
+
+#외부에서 class를 어떻게 쓸것이냐
+# marine1 = Unit("마린",40,5)  #클래스 명으로 감싸기
+# marine2 = Unit("마린",40,5)
+# tank = Unit("탱크",150,35)
+
+# #__init__ 이건 파이썬에서 쓰이는 생성자이다.
+# #객체 : 여기서 마린이나 탱크처럼 클래스로 만들어 지는 것을 객체라고 한다. 또 마린이나 탱크는 Unit클래스의 인스턴스다
+# #객체가 생성될떄 self빼고 기본적으로 inint함수와 개수가 동일하게 해야된다.
+
+# #멤버 변수
+# wraith1 = Unit("레이스",80,5)
+# print("유닛이름 : {0}, 공격력 : {1}".format(wraith1.name,wraith1.damage))
+
+# #마인드 컨트롤 : 상대방 유닛을 내 것으로 만드는 것(빼앗음)
+# wraith2 = Unit("빼앗은 레이스",80,5)
+# wraith2.clocking = True # .clocking이라는 변수는 클래스 안에 없다. 즉 외부에서 클로킹이라는 변수를 추가로 할당함
+# #이런식으로 파이썬은 추가로 변수를 외부에서 만들어서 쓸수있다. 내가 확장한 객체에서 만 쓸 수 있다.
+
+# if wraith2.clocking == True:
+#     print("{0} 는 현재 클로킹 상태입니다.".format(wraith2.name))
+
+#결과값
+# 레이스 유닛이 생성 되었습니다.
+# 체력 80, 공격력 5
+# 유닛이름 : 레이스, 공격력 : 5
+# 빼앗은 레이스 유닛이 생성 되었습니다.
+# 체력 80, 공격력 5
+# 빼앗은 레이스 는 현재 클로킹 상태입니다.
+
+
+
+##메소드
+#공격유닛
+class AttackUnit(Unit): #self 는 자기 자신을 의미 그리고 클래스 내에서 메소드 앞에는 self무조건 붙이기 또 (Unit)는 Unit을 상속받는다
+    def __init__(self,name,hp,damage): #초기 생성자 만들기 객체를 받아주기 위해
+        # self.name = name #self를 통해 자기 자신의 변수에 접근 가능 즉 클래스 내에서 받은 이름으로 name이란 변수가 다시 선언된거
+        # self.hp = hp #상속받았음으로 이부분은 겹치므로 안써도 된다. 다만 Unit에서 생성자 호출
+        Unit.__init__(self,name,hp) # Unit을 통해서 이름 과 체력을 던져서 초기화 할수 있고 추가로 데미지를 정의할수 있다.
+        self.damage = damage
+    
+    def attack(self, location): 
+        print("{0} : {1} 방향으로 적군을 공격 합니다. [공격력 {2}]"\
+            .format(self.name, location, self.damage))  #location에 self가 안붙인건 계속 받으면서 바꿔주겠다.
+
+    def damaged(self, damage):
+        print("{0} : {1} 데미지를 입었습니다.".format(self.name, damage))
+        self.hp -= damage
+        print("{0} : 현재 체력은 {1} 입니다.".format(self.name,self.hp))
+        if self.hp <= 0:
+            print("{0} : 파괴되었습니다.".format(self.name))
+
+#파벳 공격유닛, 화염방사기.  #밑에 우선 객체 만들고 클래스안에 메소드 쓰는것도 이해잘하기
+# firebat1 = AttackUnit("파이어벳",50,16) #객체 만들때 클래스옆에 ()는 걍 상속여부이고 클래스안 메소드를 통해 값 던져야 되는거 주의, 객체만든거임 **만들땐 클래스이름으로
+# firebat1.attack("5시")
+# #공격 2번 받은거
+# firebat1.damaged(25)
+# firebat1.damaged(25)
+
+#결과값
+# 파이어벳 : 5시 방향으로 적군을 공격 합니다. [공격력 16]
+# 파이어벳 : 25 데미지를 입었습니다.
+# 파이어벳 : 현재 체력은 25 입니다.
+# 파이어벳 : 25 데미지를 입었습니다.
+# 파이어벳 : 현재 체력은 0 입니다.
+# 파이어벳 : 파괴되었습니다.
+
+##상속
+#메딕 : 의무병 즉 damage가 없다.
+#위에 보면 Unit의 slef.name과 self.hp와 AttackUnit의것과 같다 이럴때 상속을 써야된다.즉 물려밨는다
+
+#다중 상속
+#드랍쉽 : 공중유닛이긴 하지만 수송기임 공격하진 않음.
+
+#날수 있는 클래스 만들기
+class Flyable:
+    def __init__(self, flying_speed):
+        self.flying_speed = flying_speed #멥버변수 초기화
+
+    def fly(self, name, location):
+        print("{0} : {1} 방향으로 날아갑니다. [속도 {2} ]"\
+            .format(name,location,self.flying_speed))
+
+            
+#공주 공격 유닛 클래스 , 여기서 다중상속 나옴
+class FlyableAttackUnit(AttackUnit,Flyable):
+    def __init__(self, name, hp, damage, flying_speed ):
+        AttackUnit.__init__(self,name,hp,damage) #간단히 설명하면 self.이런거 다 일일이 안써주려고
+        Flyable.__init__(self, flying_speed)
+
+
+valkyrie = FlyableAttackUnit("발키리",200,6,5)
+valkyrie.fly(valkyrie.name,"3시") #상속받았음으로
