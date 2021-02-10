@@ -30,9 +30,16 @@
 #지금까지 한거 클래스로 만들기
 
 class Unit:
-    def __init__(self,name,hp):  #설명하겠지만 우선적으로 따라가보기 init통해서 필요한 값들 정의를 해주는것이다.
+    def __init__(self,name,hp,speed):  #설명하겠지만 우선적으로 따라가보기 init통해서 필요한 값들 정의를 해주는것이다.
         self.name = name
         self.hp = hp
+        self.speed = speed #메소드 오버라이딩때 추가한거
+    
+    #밑에꺼도 오버라이딩 공부하면서 추가한내용
+    def move(self, location):
+        print("[지상 유닛 이동]")
+        print("{0} : {1} 방향으로 이동합니다. [속도 {2}]"\
+            .format(self.name, location, self.speed))
         # self.damage = damage
         # print("{0} 유닛이 생성 되었습니다.".format(self.name))
         # print("체력 {0}, 공격력 {1}".format(self.hp, self.damage))
@@ -71,10 +78,10 @@ class Unit:
 ##메소드
 #공격유닛
 class AttackUnit(Unit): #self 는 자기 자신을 의미 그리고 클래스 내에서 메소드 앞에는 self무조건 붙이기 또 (Unit)는 Unit을 상속받는다
-    def __init__(self,name,hp,damage): #초기 생성자 만들기 객체를 받아주기 위해
+    def __init__(self,name,hp,speed,damage): #초기 생성자 만들기 객체를 받아주기 위해
         # self.name = name #self를 통해 자기 자신의 변수에 접근 가능 즉 클래스 내에서 받은 이름으로 name이란 변수가 다시 선언된거
         # self.hp = hp #상속받았음으로 이부분은 겹치므로 안써도 된다. 다만 Unit에서 생성자 호출
-        Unit.__init__(self,name,hp) # Unit을 통해서 이름 과 체력을 던져서 초기화 할수 있고 추가로 데미지를 정의할수 있다.
+        Unit.__init__(self,name,hp,speed) # Unit을 통해서 이름 과 체력을 던져서 초기화 할수 있고 추가로 데미지를 정의할수 있다.
         self.damage = damage
     
     def attack(self, location): 
@@ -122,10 +129,58 @@ class Flyable:
             
 #공주 공격 유닛 클래스 , 여기서 다중상속 나옴
 class FlyableAttackUnit(AttackUnit,Flyable):
-    def __init__(self, name, hp, damage, flying_speed ):
-        AttackUnit.__init__(self,name,hp,damage) #간단히 설명하면 self.이런거 다 일일이 안써주려고
+    def __init__(self, name, hp, damage, flying_speed):
+        AttackUnit.__init__(self,name,hp,0,damage) #간단히 설명하면 self.이런거 다 일일이 안써주려고. 0은 지상스피드는 0이란 뜻 
+        # init조건 만치면 그 조건들이 다 AttackUnit하고 Flyable에 정보 들어감
         Flyable.__init__(self, flying_speed)
 
+    def move(self,location):   #내가 궁금했던거! 아니
+        print("[공중 유닛 이동]")
+        self.fly(self.name,location)  #  self.name은 여안에 있는걸 준다는거고 location은 받은거 그냥 준다는 거고
 
-valkyrie = FlyableAttackUnit("발키리",200,6,5)
-valkyrie.fly(valkyrie.name,"3시") #상속받았음으로
+
+# valkyrie = FlyableAttackUnit("발키리",200,6,5)
+# valkyrie.fly(valkyrie.name,"3시") #상속받았음으로
+
+#메소드 오버라이딩 : 부모클래스에서 정의한 메소드말고,자식클래스에서 정의한 메소드 쓰고 싶을때 이를 오버라이딩이라고 함
+#여기서도 위에서 살을 붙여서 다시 작성해봄
+
+#벌쳐 : 지상 유닛, 기동성이 좋음
+vulture = AttackUnit("벌쳐",80,10,20) #자연스레 Unit안 메소드를 쓸수 있는것이다. 왜냐? AttackUnit이 Unit을 상속하기 때문에
+battlecruiser = FlyableAttackUnit("배틀크루저",500,25,3) #이 두개는 초기 정보를 넣주는거
+
+vulture.move("11시")
+battlecruiser.move("9시") # battlecruiser.name은  Flyable에 이름이 따로 init되지 않아서 .name해줘야됨
+#내가 궁금했던거! 아니 여기서 바로 move해도 되지않나요? 호출되는데 새롭게 재정의 해서 날아가는걸로 move를 쓸수있게씀 저기move는 땅에꺼니까
+
+
+#여기서 같은 내용인데도(어느쪽으로 간다는) 지상은 move() , 공중은 fly()써야된다. 이럴때 메소드 오버라이딩을 쓴다.
+#즉 move() 만 써도 지상은 움직이고 공중은 날아갈수 있게 처리해보자
+
+#결과값
+# [지상 유닛 이동]
+# 벌쳐 : 11시 방향으로 이동합니다. [속도 10]
+# [공중 유닛 이동]
+# 배틀크루저 : 9시 방향으로 날아갑니다. [속도 3 ]
+
+#####pass에 대해 배워보자
+class BuildingUnit(Unit):
+    def __init__(self, name, hp, location):
+        # pass #일단 완성된거 처럼 보여지고 넘아간다.
+    # Unit.__init__(self,name,hp,0) #상속받는거 이렇게 쓴다해찌? 마쨰? 근데 이거 대신 super()쓸수있다. 내용은 같은거
+    super().__init__(name,hp,0) #슈퍼할때 self는 노노 #다중상속땐 한개만 인식함
+    self.location = location
+
+#서플라이 디폿 : 건물, 1개 있을때 마다 8만큼 유닛 생성
+# supply_depot = BuildingUnit("서플라이 디폿", 500, "7시")
+
+# def game_start():
+#     print("[알림] 새로운 게임을 시작합니다.")
+
+# def game_over():
+#     pass
+
+# game_start()
+# game_over()  #위는 게임 시작한다고 출력되지만 이놈은 걍 넘아감
+
+##super에 대해 배워보자
