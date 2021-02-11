@@ -1,0 +1,108 @@
+#theater_module 이라는 파일을 따로 만듬
+내용:
+#일반 가격
+def price(people):
+    print("{0}명 가격은 {1}원 입니다.".format(people,people * 10000))
+
+#조조할일 가격
+def price_moring(people):
+    print("{0}명 조조 할일 가격은 {1}원 입니다.".format(people,people* 6000))
+
+#군인 할인 가격
+def price_soldier(people):
+    print("{0}명 군인 할일 가격은 {1}원 입니다.".format(people,people* 4000))
+    
+
+##다시 돌아와서 월래 쓰는 파일
+##모듈 : 자동차로 예를 들면 타이어문제면 타이어만 고치면 되는거 파이썬에선 함수정의나 클래스등의 확장자가 .py이다.
+
+#전제 조건은 파일을 하나 만들었다는거
+# import theater_module  
+# theater_module.price(3)  #주의할점 : 우선 만든 파일에서 저장을 해야된다.
+# theater_module.price_moring(4)
+# theater_module.price_soldier(5)
+
+##밑에도 똑같다.
+# import theater_module as mv #이거는 as는 theater_module을 mv로만 호출가능
+# mv.price(3)  #주의할점 : 우선 만든 파일에서 저장을 해야된다.
+# mv.price_moring(4)
+# mv.price_soldier(5) 
+# #위랑 같은 결과값임
+
+#form import쓰기
+# from theater_module import * #이때는 앞에 theater_module필요없이 이 안에 내용 모두 쓰겠다.
+# price(3)
+# price_moring(4)
+# price_soldier(5)
+
+#내가 필요한 함수만 import받을 수 있다.
+from theater_module import price, price_moring
+price(5)
+price_moring(6)
+##위에 것두 또 as로 별명 붙일 수 있다.
+
+
+##다음으로 travel이라는 폴더를 만들고 이안에다가
+thailand.py,vietnam.py,__init__.py파일을 만들었다.
+
+__init__.py 파일 내용:
+__all__ = ["vietnam","thailand"]
+
+####thailand.py 파일 내용:
+class ThailandPackage:
+    def detail(self):
+        print("[태국 패키지 3박 5일] 방콕, 파타야 여행 (야시장 투어) 50만원")
+
+
+##모듈 직접 실행
+if __name__ == "__main__":  #직접 이 내용 실행할땐 이 구문 탄다. 즉 여기 화면에서 플레이버튼 누르면 이거 실행됨
+    print("Thailand 모듈 직접 실행")
+    print("이 문장은 모듈을 직접 실행할 때만 실행돼요")
+    trip_to = ThailandPackage()
+    trip_to.detail()
+else:
+    print("Thailand 외부에서 모듈 호출")   ##practice.py에서 하면 이 문장 찍히고
+    
+####vietnam.py내용 안
+class VietnamPackage:
+    def detail(self):
+        print("[베트남 패키지 3박 5일] 다낭 효도 여행 60만원")
+    
+    
+######우리가 하는 원파일 practice.py 내용
+
+##패키지에 대해 알아보자 : 모듈을 모아 놓은 파일
+import travel.thailand #클래스나 함수는 직접적 import못하고 요놈은 모듈이나 패키지만 하지만 form import구문에서 가능
+trip_to  = travel.thailand.ThailandPackage() ##위 경로대로 객체 생성
+trip_to.detail() # 결과값 : [태국 패키지 3박 5일] 방콕, 파타야 여행 (야시장 투어) 50만원
+
+##클래스나 함수는 직접적 import못하고 요놈은 모듈이나 패키지만 하지만 form import구문에서 가능 예를들면
+from travel.thailand import ThailandPackage
+trip_to = ThailandPackage()
+trip_to.detail()
+
+#베트남
+# from travel import vietnam
+# trip_to = vietnam.VietnamPackage() #이렇게 ㅇㅋ?
+# trip_to.detail()
+
+#비슷한 내용으로 이건 travel이라는 패키지를 우리가 만든거지 파이썬에서 만들어 놓은 패키지를 쓰려면
+#from random import* 요래하면 random패키지에 있는거 쓸수 있었징
+from travel import *
+# trip_to = vietnam.VietnamPackage() #이렇게 ㅇㅋ?
+# trip_to.detail()
+
+##이러면 쓸수있어야되는데 vietnam에 빨건불 들어온다.즉 *은 우리가 만든 패키지의 모든것을 가져오겠다는건데 이 문법상에서 공개범위를 설정해주어야 한다.
+# 즉 패키지 상에서 import 되기를 원하는 것만 되고 원하지않은건 비공개 설정 -->__init__으로 가기
+#가서 __all__ = ["vietnam"] 이거하니까 위에 빨간불 사라짐 근데 thailand는 설정 안해줘서 안될끼다.
+
+
+##__all__배우기 ( __init__으로 가기)
+
+####패키지나 이런것들이 어디서(위치) 수행되는지 알려면
+import inspect
+import random
+print(inspect.getfile(random)) # 결과값  C:\Python38\lib\random.py
+print(inspect.getfile(thailand)) #c:\Users\98tae\OneDrive\바탕 화면\PythonWorkspace\travel\thailand.py
+  
+
