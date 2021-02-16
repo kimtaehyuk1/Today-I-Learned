@@ -22,4 +22,4 @@ https://www.youtube.com/watch?v=DbD1pEx4hFI
 
 
 
-![](file:///C:/Users/98tae/OneDrive/%EB%B0%94%ED%83%95%20%ED%99%94%EB%A9%B4/%EC%82%AC%EC%A7%84/KakaoTalk_20210216_231430017.jpg "링크 설명(title)을 작성하세요.")
+![](https://ifh.cc/g/gwG8iB.jpg "링크 설명(title)을 작성하세요.")
