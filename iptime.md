@@ -22,3 +22,4 @@ https://www.youtube.com/watch?v=DbD1pEx4hFI
 
 
 
+![대체 텍스트(alternative text)를 입력하세요!](file:///C:/Users/98tae/OneDrive/%EB%B0%94%ED%83%95%20%ED%99%94%EB%A9%B4/%EC%82%AC%EC%A7%84/KakaoTalk_20210216_231430017.jpg "링크 설명(title)을 작성하세요.")
