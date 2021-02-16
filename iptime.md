@@ -23,3 +23,5 @@ https://www.youtube.com/watch?v=DbD1pEx4hFI
 
 
 ![](https://ifh.cc/g/gwG8iB.jpg "링크 설명(title)을 작성하세요.")
+
+(이미지를 http로 생성하는 법 https://m.blog.naver.com/PostView.nhn?blogId=nudlelove&logNo=220592937835&proxyReferer=https:%2F%2Fwww.google.com%2F )
