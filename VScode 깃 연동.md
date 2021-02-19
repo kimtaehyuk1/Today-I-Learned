@@ -1,4 +1,4 @@
-# 🦄연동🦄
+# 📡연동📡
 ## visual studio 깃 연동 하는 방법
 1. 깃에서 repository 만든 후 visual studio안에서 repository url clone
 (여기선 클론 먼저하고 시작, 다른 방법이 있을 수 있으니 계속 공부)
